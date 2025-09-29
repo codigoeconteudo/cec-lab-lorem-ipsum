@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gerador de Lorem Ipsum</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center pt-10">
+  <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+    <h1 class="text-2xl font-bold mb-4 text-center">Gerador de Lorem Ipsum</h1>
+    <form id="loremForm" class="flex flex-col items-center gap-4">
+      <label for="numParagraphs" class="font-medium">Quantidade de parágrafos:</label>
+      <input type="number" id="numParagraphs" name="numParagraphs" min="1" max="20" value="3" class="w-20 border rounded p-2 text-center">
+      <button type="submit" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition">Gerar</button>
+    </form>
+    <div id="output" class="mt-6 space-y-4"></div>
+  </div>
+  <script>
+    // Base de frases lorem ipsum
+    const frases = [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "Curabitur pretium tincidunt lacus. Nulla gravida orci a odio.",
+      "Nulla facilisi. Donec volutpat, erat sed fermentum feugiat, velit mauris egestas quam.",
+      "Phasellus euismod, nunc ut laoreet placerat, risus elit dapibus libero, vel scelerisque lorem erat a neque.",
+      "Praesent nec facilisis sapien. Maecenas euismod, massa ut sollicitudin suscipit, justo nulla dictum tortor.",
+      "Vivamus sollicitudin velit eu sem ultricies, ut semper velit ultrices.",
+      "Etiam cursus leo vel metus. Nulla facilisi.",
+      "Aenean nec eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.",
+      "Proin rutrum, tortor quis aliquam pretium, eros erat porta urna, et consectetur est nunc eget ipsum."
+    ];
+
+    function gerarParagrafo() {
+      // Cria um parágrafo com 3 a 6 frases aleatórias
+      const qtdFrases = Math.floor(Math.random() * 4) + 3;
+      let parag = [];
+      for (let i = 0; i < qtdFrases; i++) {
+        parag.push(frases[Math.floor(Math.random() * frases.length)]);
+      }
+      return parag.join(" ");
+    }
+
+    document.getElementById("loremForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const qtd = parseInt(document.getElementById("numParagraphs").value) || 1;
+      const output = document.getElementById("output");
+      output.innerHTML = "";
+      for (let i = 0; i < qtd; i++) {
+        const p = document.createElement("p");
+        p.className = "text-gray-700";
+        p.textContent = gerarParagrafo();
+        output.appendChild(p);
+      }
+    });
+
+    // Gera os parágrafos ao carregar
+    window.onload = () => document.getElementById("loremForm").dispatchEvent(new Event('submit'));
+  </script>
+</body>
+</html>
